@@ -18,6 +18,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Logger")
 	bool WriteToFile(ELogCategory Category = ELogCategory::Log, FString Content = TEXT("Hello world!"));
 
+	UFUNCTION(BlueprintCallable, Category = "Logger")
+	void AsyncWriteToFile(ELogCategory Category = ELogCategory::Log, FString Content = TEXT("Hello world!"));
+
+
 private:
 	bool bPrintTimestamps;
 	FString FilePath;

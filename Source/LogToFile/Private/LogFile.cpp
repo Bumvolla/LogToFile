@@ -34,6 +34,16 @@ bool ULogFile::WriteToFile(ELogCategory Category, FString Content)
     return FFileHelper::SaveStringToFile(wNewlineChar, *FilePath, FFileHelper::EEncodingOptions::AutoDetect, &IFileManager::Get(), FILEWRITE_Append);
 }
 
+void ULogFile::AsyncWriteToFile(ELogCategory Category, FString Content)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, Category, Content]()
+	{
+		WriteToFile(Category, Content);
+	});
+}
+
+
+
 FString ULogFile::AddTime(FString String)
 {
 	const FString CurrentTime = TEXT("[") + ULogToFileBPLibrary::GetCurrentTime() + TEXT("] - ");
