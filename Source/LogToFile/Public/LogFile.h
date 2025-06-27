@@ -17,19 +17,21 @@ class LOGTOFILE_API ULogFile : public UObject
 
 public:
 
-	ULogFile();
-	ULogFile(bool bIn_RegenerateFile,const FString& In_FileDir,const FString& In_FileName,const bool bIn_PrintTimestamps)
+	ULogFile::ULogFile();
+	ULogFile::ULogFile(bool bIn_RegenerateFile,const FString& In_FileDir,const FString& In_FileName,const bool bIn_PrintTimestamps)
 		: bPrintTimestamps(bIn_PrintTimestamps), FileDir(In_FileDir), FileName(In_FileName)
 	{
 		Initialize(bIn_RegenerateFile, FileDir, FileName, bPrintTimestamps);
 	}
 	;
-
-	UFUNCTION(NotBlueprintable, Category = "Logger")
-	void ChangeFileSavePath(const FString& NewSaveDir);
 	
 	UFUNCTION(NotBlueprintable, Category = "Logger")
 	void Initialize(bool bRegenerateFile, FString In_FileDir, FString In_FileName, bool In_bPrintTimestamps);
+
+	UFUNCTION(NotBlueprintable, Category = "Logger")
+	void ChangeFileSavePath(const FString& NewSaveDir);
+
+	UFUNCTION()
 
 	UFUNCTION(BlueprintCallable, Category = "Logger")
 	bool WriteToFile(FString Content = TEXT("Hello world!"));

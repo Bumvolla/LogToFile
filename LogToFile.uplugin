@@ -19,6 +19,11 @@
 			"Name": "LogToFile",
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen"
+		},
+		{
+			"Name": "CSVToFile",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	]
 }

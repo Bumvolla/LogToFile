@@ -51,6 +51,10 @@ void ULogFile::Initialize(bool bRegenerateFile, FString In_FileDir, FString In_F
 	bPrintTimestamps = In_bPrintTimestamps;
 	FileDir = In_FileDir;
 	FileName = In_FileName;
+	
+	if (!FileDir.EndsWith("/"))
+		FileDir += "/";
+	
 	FilePath = FString::Printf(TEXT("%s%s.txt"), *FileDir, *FileName);
 
 	bool bSuccess;

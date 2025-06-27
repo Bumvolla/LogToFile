@@ -6,6 +6,9 @@ ULogFile* ULogToFileBPLibrary::CreateLogFile(bool bRegenerateFile, FString FileC
 {
 	ULogFile* LogFile = NewObject<ULogFile>();
 	
+	if (!FileCreationPath.EndsWith("/"))
+		FileCreationPath += "/";
+	
 	FString FullRoute = FString::Printf(TEXT("%s%s.txt"), *FileCreationPath, *FileName);
 	
 	if (FPaths::FileExists(FullRoute) && !bRegenerateFile)
@@ -18,6 +21,7 @@ ULogFile* ULogToFileBPLibrary::CreateLogFile(bool bRegenerateFile, FString FileC
 			LogFile->WriteToFile(Line);
 		}
 	}
+	
 	LogFile->Initialize(bRegenerateFile,FileCreationPath, FileName, bPrintTimestamps);
 	return LogFile;
 }
