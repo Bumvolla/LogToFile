@@ -2,11 +2,24 @@
 #include "LogToFile.h"
 #include "Misc/DateTime.h"
 
-ULogFile* ULogToFileBPLibrary::CreateLogFile(FString FileCreationPath, bool bPrintTimestamps)
+ULogFile* ULogToFileBPLibrary::CreateLogFile(bool bRegenerateFile, FString FileCreationPath, FString FileName, bool bPrintTimestamps)
 {
-	ULogFile* createdLogFile = NewObject<ULogFile>();
-	createdLogFile->Initialize(FileCreationPath, bPrintTimestamps);
-	return createdLogFile;
+	ULogFile* LogFile = NewObject<ULogFile>();
+	
+	FString FullRoute = FString::Printf(TEXT("%s%s.txt"), *FileCreationPath, *FileName);
+	
+	if (FPaths::FileExists(FullRoute) && !bRegenerateFile)
+	{
+		TArray<FString> Lines;
+		FFileHelper::LoadFileToStringArray(Lines, *FullRoute);
+		LogFile->Initialize(bRegenerateFile,FileCreationPath, FileName, bPrintTimestamps);
+		for (FString Line : Lines)
+		{
+			LogFile->WriteToFile(Line);
+		}
+	}
+	LogFile->Initialize(bRegenerateFile,FileCreationPath, FileName, bPrintTimestamps);
+	return LogFile;
 }
 
 FString ULogToFileBPLibrary::GetCurrentTime()
